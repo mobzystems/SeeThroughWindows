@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeThroughWindows", "SeeThroughWindows\SeeThroughWindows.csproj", "{00E2FF0D-A3DD-4EBE-995D-67A4408C2B69}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SeeThroughWindowsSetup", "SeeThroughWindowsSetup\SeeThroughWindowsSetup.vdproj", "{84E13E23-8DDE-4CA8-B709-A3D8775B9937}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{00E2FF0D-A3DD-4EBE-995D-67A4408C2B69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00E2FF0D-A3DD-4EBE-995D-67A4408C2B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00E2FF0D-A3DD-4EBE-995D-67A4408C2B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00E2FF0D-A3DD-4EBE-995D-67A4408C2B69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84E13E23-8DDE-4CA8-B709-A3D8775B9937}.Debug|Any CPU.ActiveCfg = Debug
+		{84E13E23-8DDE-4CA8-B709-A3D8775B9937}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
