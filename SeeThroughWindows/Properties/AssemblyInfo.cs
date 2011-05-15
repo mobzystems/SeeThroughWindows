@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("MOBZystems")]
 [assembly: AssemblyProduct("SeeThroughWindows")]
-[assembly: AssemblyCopyright("Copyright ©  2008-2009, MOBZystems BV, Amsterdam")]
+[assembly: AssemblyCopyright("Copyright ©  2008-2011, MOBZystems BV, Amsterdam")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("1.0.2.0")]
-[assembly: AssemblyFileVersion("1.0.2.0")]
+[assembly: AssemblyVersion("1.0.3.0")]
+[assembly: AssemblyFileVersion("1.0.3.0")]

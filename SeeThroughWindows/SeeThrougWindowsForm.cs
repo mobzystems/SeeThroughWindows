@@ -170,14 +170,14 @@ namespace SeeThroughWindows
     // Current transparency value
     private short semiTransparentValue = DEFAULT_SEMITRANSPARENT;
 
-    // Maximize hotkey: Windows+Up
-    protected MOBZystems.Hotkey maximizeHotkey = new MOBZystems.Hotkey(Keys.Up, false, false, false, true);
-    // Minimize hotkey: Windows+Down
-    protected MOBZystems.Hotkey minimizeHotkey = new MOBZystems.Hotkey(Keys.Down, false, false, false, true);
-    // Previous monitor hotkey: Shift+Windows+Left
-    protected MOBZystems.Hotkey previousScreenHotkey = new MOBZystems.Hotkey(Keys.Left, false, false, false, true);
-    // Next monitor hotkey: Shift+Windows+Right
-    protected MOBZystems.Hotkey nextScreenHotkey = new MOBZystems.Hotkey(Keys.Right, false, false, false, true);
+    // Maximize hotkey: Control+Windows+Up
+    protected MOBZystems.Hotkey maximizeHotkey = new MOBZystems.Hotkey(Keys.Up, false, true, false, true);
+    // Minimize hotkey: Control+Windows+Down
+    protected MOBZystems.Hotkey minimizeHotkey = new MOBZystems.Hotkey(Keys.Down, false, true, false, true);
+    // Previous monitor hotkey: Control+Windows+Left
+    protected MOBZystems.Hotkey previousScreenHotkey = new MOBZystems.Hotkey(Keys.Left, false, true, false, true);
+    // Next monitor hotkey: Control+Windows+Right
+    protected MOBZystems.Hotkey nextScreenHotkey = new MOBZystems.Hotkey(Keys.Right, false, true, false, true);
 
     // Flag indicating we're really closing the application
     private bool exitingApplication = false;

@@ -50,8 +50,8 @@ namespace SeeThroughWindows
       this.helpLink = new System.Windows.Forms.LinkLabel();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
       this.groupBox2 = new System.Windows.Forms.GroupBox();
-      this.minMaxEnabledCheckBox = new System.Windows.Forms.CheckBox();
       this.sendToMonitorEnabledCheckBox = new System.Windows.Forms.CheckBox();
+      this.minMaxEnabledCheckBox = new System.Windows.Forms.CheckBox();
       toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       label1 = new System.Windows.Forms.Label();
       label2 = new System.Windows.Forms.Label();
@@ -68,7 +68,7 @@ namespace SeeThroughWindows
       // toolStripSeparator1
       // 
       toolStripSeparator1.Name = "toolStripSeparator1";
-      toolStripSeparator1.Size = new System.Drawing.Size(131, 6);
+      toolStripSeparator1.Size = new System.Drawing.Size(122, 6);
       // 
       // label1
       // 
@@ -109,7 +109,7 @@ namespace SeeThroughWindows
       // pictureBox1
       // 
       pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-      pictureBox1.Location = new System.Drawing.Point(14, 12);
+      pictureBox1.Location = new System.Drawing.Point(12, 12);
       pictureBox1.Name = "pictureBox1";
       pictureBox1.Size = new System.Drawing.Size(64, 64);
       pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -130,19 +130,19 @@ namespace SeeThroughWindows
             toolStripSeparator1,
             this.exitToolStripMenuItem});
       this.contextMenuStrip.Name = "contextMenuStrip";
-      this.contextMenuStrip.Size = new System.Drawing.Size(135, 54);
+      this.contextMenuStrip.Size = new System.Drawing.Size(126, 54);
       // 
       // optionsToolStripMenuItem
       // 
       this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-      this.optionsToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+      this.optionsToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
       this.optionsToolStripMenuItem.Text = "Options...";
       this.optionsToolStripMenuItem.Click += new System.EventHandler(this.notifyIcon_DoubleClick);
       // 
       // exitToolStripMenuItem
       // 
       this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-      this.exitToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+      this.exitToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
       this.exitToolStripMenuItem.Text = "E&xit";
       this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
       // 
@@ -227,7 +227,8 @@ namespace SeeThroughWindows
       // 
       // helpLink
       // 
-      this.helpLink.Location = new System.Drawing.Point(220, 264);
+      this.helpLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.helpLink.Location = new System.Drawing.Point(263, 253);
       this.helpLink.Name = "helpLink";
       this.helpLink.Size = new System.Drawing.Size(235, 18);
       this.helpLink.TabIndex = 2;
@@ -239,6 +240,8 @@ namespace SeeThroughWindows
       // 
       // groupBox1
       // 
+      this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.groupBox1.Controls.Add(this.hotKeyComboBox);
       this.groupBox1.Controls.Add(this.shiftCheckBox);
       this.groupBox1.Controls.Add(this.previewCheckBox);
@@ -250,9 +253,9 @@ namespace SeeThroughWindows
       this.groupBox1.Controls.Add(this.windowsCheckBox);
       this.groupBox1.Controls.Add(label2);
       this.groupBox1.Controls.Add(this.transparencyTrackBar);
-      this.groupBox1.Location = new System.Drawing.Point(92, 8);
+      this.groupBox1.Location = new System.Drawing.Point(82, 12);
       this.groupBox1.Name = "groupBox1";
-      this.groupBox1.Size = new System.Drawing.Size(363, 166);
+      this.groupBox1.Size = new System.Drawing.Size(414, 162);
       this.groupBox1.TabIndex = 0;
       this.groupBox1.TabStop = false;
       this.groupBox1.Text = "Make window transparent";
@@ -264,40 +267,40 @@ namespace SeeThroughWindows
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.groupBox2.Controls.Add(this.sendToMonitorEnabledCheckBox);
       this.groupBox2.Controls.Add(this.minMaxEnabledCheckBox);
-      this.groupBox2.Location = new System.Drawing.Point(91, 180);
+      this.groupBox2.Location = new System.Drawing.Point(82, 180);
       this.groupBox2.Name = "groupBox2";
-      this.groupBox2.Size = new System.Drawing.Size(364, 72);
+      this.groupBox2.Size = new System.Drawing.Size(414, 70);
       this.groupBox2.TabIndex = 1;
       this.groupBox2.TabStop = false;
       this.groupBox2.Text = "Move window";
-      // 
-      // minMaxEnabledCheckBox
-      // 
-      this.minMaxEnabledCheckBox.AutoSize = true;
-      this.minMaxEnabledCheckBox.Location = new System.Drawing.Point(10, 22);
-      this.minMaxEnabledCheckBox.Name = "minMaxEnabledCheckBox";
-      this.minMaxEnabledCheckBox.Size = new System.Drawing.Size(304, 17);
-      this.minMaxEnabledCheckBox.TabIndex = 0;
-      this.minMaxEnabledCheckBox.Text = "Enable Windows+Up/Down to maximize/mimimize windows";
-      this.minMaxEnabledCheckBox.UseVisualStyleBackColor = true;
-      this.minMaxEnabledCheckBox.CheckedChanged += new System.EventHandler(this.minMaxEnabledCheckBox_CheckedChanged);
       // 
       // sendToMonitorEnabledCheckBox
       // 
       this.sendToMonitorEnabledCheckBox.AutoSize = true;
       this.sendToMonitorEnabledCheckBox.Location = new System.Drawing.Point(10, 45);
       this.sendToMonitorEnabledCheckBox.Name = "sendToMonitorEnabledCheckBox";
-      this.sendToMonitorEnabledCheckBox.Size = new System.Drawing.Size(329, 17);
+      this.sendToMonitorEnabledCheckBox.Size = new System.Drawing.Size(372, 17);
       this.sendToMonitorEnabledCheckBox.TabIndex = 1;
-      this.sendToMonitorEnabledCheckBox.Text = "Enable Windows+Left/Right to send windows to other monitors";
+      this.sendToMonitorEnabledCheckBox.Text = "Enable Control+Windows+Left/Right to send windows to other monitors";
       this.sendToMonitorEnabledCheckBox.UseVisualStyleBackColor = true;
       this.sendToMonitorEnabledCheckBox.CheckedChanged += new System.EventHandler(this.sendToMonitorEnabledCheckBox_CheckedChanged);
+      // 
+      // minMaxEnabledCheckBox
+      // 
+      this.minMaxEnabledCheckBox.AutoSize = true;
+      this.minMaxEnabledCheckBox.Location = new System.Drawing.Point(10, 22);
+      this.minMaxEnabledCheckBox.Name = "minMaxEnabledCheckBox";
+      this.minMaxEnabledCheckBox.Size = new System.Drawing.Size(347, 17);
+      this.minMaxEnabledCheckBox.TabIndex = 0;
+      this.minMaxEnabledCheckBox.Text = "Enable Control+Windows+Up/Down to maximize/mimimize windows";
+      this.minMaxEnabledCheckBox.UseVisualStyleBackColor = true;
+      this.minMaxEnabledCheckBox.CheckedChanged += new System.EventHandler(this.minMaxEnabledCheckBox_CheckedChanged);
       // 
       // SeeThrougWindowsForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(465, 289);
+      this.ClientSize = new System.Drawing.Size(508, 280);
       this.Controls.Add(this.groupBox2);
       this.Controls.Add(this.groupBox1);
       this.Controls.Add(this.helpLink);
