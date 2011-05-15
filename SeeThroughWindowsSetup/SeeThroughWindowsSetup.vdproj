@@ -178,7 +178,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:See Through Windows"
         "ProductCode" = "8:{EF8E0938-1FC4-43CB-A911-15AE885E41FB}"
-        "PackageCode" = "8:{05203635-CCFD-4670-B1D8-A38493EFF6BD}"
+        "PackageCode" = "8:{A675AD01-A528-4D72-9E6E-2A56BA46E34D}"
         "UpgradeCode" = "8:{2CBC465E-0AB2-4C31-BBCF-C48C5D90505C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
