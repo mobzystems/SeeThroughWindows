@@ -34,8 +34,8 @@ namespace SeeThroughWindows
     #region Interop Stuff
     private const int GWL_STYLE = -16;
     private const int GWL_EX_STYLE = -20;
-    private const int WS_EX_LAYERED = 1;
-    private const int WS_EX_TRANSPARENT = 0x80000;
+    private const int WS_EX_LAYERED = 0x80000;
+    private const int WS_EX_TRANSPARENT = 0x20;
 
     [DllImport("user32.dll")]
     private static extern uint SetWindowLong(IntPtr hWnd, int nIndex, uint dwNewLong);
@@ -163,7 +163,8 @@ namespace SeeThroughWindows
     private const string REGROOT = "Software\\MOBZystems\\MOBZXRay\\";
 
     // The style to apply to transparenticized windows
-    private const uint NEW_STYLE = (WS_EX_LAYERED | WS_EX_TRANSPARENT);
+    private const uint NEW_STYLE_TRANSPARENT = (WS_EX_LAYERED);
+    private const uint NEW_STYLE_CLICKTHROUGH = (WS_EX_LAYERED | WS_EX_TRANSPARENT);
 
     // Current hotkey for transparency
     protected MOBZystems.Hotkey userHotkey = null;
@@ -209,6 +210,9 @@ namespace SeeThroughWindows
         this.semiTransparentValue = (short)this.transparencyTrackBar.Minimum;
       if (this.semiTransparentValue > this.transparencyTrackBar.Maximum)
         this.semiTransparentValue = (short)this.transparencyTrackBar.Maximum;
+
+      // Click-through-ness:
+      this.clickThroughCheckBox.Checked = BoolFromString((string)root.GetValue("ClickThrough", "0"));
 
       // Then the hot key:
       string hotkeyString = (string)root.GetValue("Hotkey", "Z");
@@ -352,6 +356,8 @@ namespace SeeThroughWindows
         WindowInfo window = null;
         if (windows.ContainsKey(activeWindowHandle))
           window = windows[activeWindowHandle];
+
+        uint NEW_STYLE = this.clickThroughCheckBox.Checked ? NEW_STYLE_CLICKTHROUGH : NEW_STYLE_TRANSPARENT;
 
         if (window == null)
         {
@@ -752,7 +758,7 @@ namespace SeeThroughWindows
     {
       uint style = GetWindowLong(handle, GWL_EX_STYLE);
 
-      SetWindowLong(handle, GWL_EX_STYLE, (style & ~NEW_STYLE) | (originalStyle & NEW_STYLE));
+      SetWindowLong(handle, GWL_EX_STYLE, (style & ~NEW_STYLE_CLICKTHROUGH) | (originalStyle & NEW_STYLE_CLICKTHROUGH));
     }
 
     /// <summary>
@@ -779,6 +785,7 @@ namespace SeeThroughWindows
       RegistryKey root = Registry.CurrentUser.CreateSubKey(REGROOT);
 
       root.SetValue("Transparency", this.semiTransparentValue.ToString());
+      root.SetValue("ClickThrough", BoolToString(this.clickThroughCheckBox.Checked));
       root.SetValue("Hotkey", MOBZystems.Hotkey.KeyCodeToString(this.userHotkey.KeyCode));
       root.SetValue("Shift", BoolToString(this.userHotkey.Shift));
       root.SetValue("Control", BoolToString(this.userHotkey.Control));

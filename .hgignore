@@ -4,3 +4,6 @@ syntax: glob
 *.csproj.user
 */Debug/*
 */Release/*
+SeeThroughWindows/images/Glasses-32B.png
+SeeThroughWindows.sln.docstates
+SeeThroughWindows/images/.docstates
