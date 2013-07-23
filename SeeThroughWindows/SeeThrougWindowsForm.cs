@@ -28,9 +28,6 @@ namespace SeeThroughWindows
     }
     #endregion
 
-    // The list of windows we have 'transparenticized'
-    private Dictionary<IntPtr, WindowInfo> windows = new Dictionary<IntPtr, WindowInfo>();
-
     #region Interop Stuff
     private const int GWL_STYLE = -16;
     private const int GWL_EX_STYLE = -20;
@@ -167,11 +164,13 @@ namespace SeeThroughWindows
     
     #endregion
 
+    #region Constants
     // Constant for opaque transparency
     private const short OPAQUE = 255;
     // Default value for transparency
     private const short DEFAULT_SEMITRANSPARENT = 64;
-    // The registry root we're using to save and load settings
+    // The registry root we're using to save and load settings.
+    // This should be See Thorugh Windows, but MOBZXRay was the previous name of STW
     private const string REGROOT = "Software\\MOBZystems\\MOBZXRay\\";
 
     // The style to apply to transparenticized windows
@@ -179,6 +178,11 @@ namespace SeeThroughWindows
     private const uint NEW_STYLE_CLICKTHROUGH = (WS_EX_LAYERED | WS_EX_TRANSPARENT);
     private const uint NEW_STYLE_CLICKTHROUGH_TOPMOST = (WS_EX_LAYERED | WS_EX_TRANSPARENT | WS_EX_TOPMOST);
     private const uint NEW_STYLE_ALL = (WS_EX_LAYERED | WS_EX_TRANSPARENT | WS_EX_TOPMOST);
+    #endregion
+
+    #region Data members
+    // The list of windows we have hijacked (e.g. 'transparenticized')
+    private Dictionary<IntPtr, WindowInfo> hijackedWindows = new Dictionary<IntPtr, WindowInfo>();
 
     // Current hotkey for transparency
     protected MOBZystems.Hotkey userHotkey = null;
@@ -194,12 +198,19 @@ namespace SeeThroughWindows
     // Next monitor hotkey: Control+Windows+Right
     protected MOBZystems.Hotkey nextScreenHotkey = new MOBZystems.Hotkey(Keys.Right, false, true, false, true);
 
+    // More transparent hotkey: Control+Windows+PageDn
+    protected MOBZystems.Hotkey moreTransparentHotkey = new MOBZystems.Hotkey(Keys.PageDown, false, true, false, true);
+    // Less transparent hotkey: Control+Windows+PageUp
+    protected MOBZystems.Hotkey lessTransparentHotkey = new MOBZystems.Hotkey(Keys.PageUp, false, true, false, true);
+
     // Flag indicating we're really closing the application
     private bool exitingApplication = false;
 
     // Flag indicating we're still loading
     private bool loading = false;
+    #endregion
 
+    #region Constructor
     /// <summary>
     /// Constructor
     /// </summary>
@@ -210,7 +221,9 @@ namespace SeeThroughWindows
       InitializeComponent();
 
       Version version = new Version(Application.ProductVersion);
-      this.helpLink.Text = this.helpLink.Text.Replace("#", string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build));
+      this.helpLink.Text = this.helpLink.Text
+        .Replace("#V#", string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build))
+        .Replace("#3264#", (IntPtr.Size*8).ToString());
 
       // Use same icon for notify icon as for this form
       this.notifyIcon.Icon = this.Icon;
@@ -238,6 +251,7 @@ namespace SeeThroughWindows
 
       this.sendToMonitorEnabledCheckBox.Checked = BoolFromString((string)root.GetValue("EnableLeftRight", "1"));
       this.minMaxEnabledCheckBox.Checked = BoolFromString((string)root.GetValue("EnableUpDown", "1"));
+      this.enableChangeTransparencyCheckbox.Checked = BoolFromString((string)root.GetValue("EnablePageUpDown", "1"));
 
       // Create a hot key with the settings:
       this.userHotkey = new MOBZystems.Hotkey(MOBZystems.Hotkey.KeyCodeFromString(hotkeyString), shiftKey, controlKey, altKey, windowsKey);
@@ -260,6 +274,14 @@ namespace SeeThroughWindows
       this.nextScreenHotkey.Pressed += new HandledEventHandler(NextScreenHotkey_Pressed);
       if (this.sendToMonitorEnabledCheckBox.Checked)
         this.nextScreenHotkey.Register(this);
+
+      this.moreTransparentHotkey.Pressed += new HandledEventHandler(MoreTransparentHotkey_Pressed);
+      if (this.enableChangeTransparencyCheckbox.Checked)
+        this.moreTransparentHotkey.Register(this);
+
+      this.lessTransparentHotkey.Pressed += new HandledEventHandler(LessTransparentHotkey_Pressed);
+      if (this.enableChangeTransparencyCheckbox.Checked)
+        this.lessTransparentHotkey.Register(this);
 
       // Set up our form:
       for (Keys k = Keys.A; k <= Keys.Z; k++)
@@ -288,6 +310,7 @@ namespace SeeThroughWindows
 
       this.transparencyTrackBar.Value = this.semiTransparentValue;
 
+      // Done loading
       this.loading = false;
     }
 
@@ -297,14 +320,14 @@ namespace SeeThroughWindows
       if (k == this.userHotkey.KeyCode)
         this.hotKeyComboBox.SelectedItem = k;
     }
+    #endregion
 
     #region Overridden methods
 
     /// <summary>
     /// Make sure we hide when the user wants to close,
-    /// except when this.closing = true
+    /// except when this.exitingApplication
     /// </summary>
-    /// <param name="e"></param>
     protected override void OnFormClosing(FormClosingEventArgs e)
     {
       base.OnFormClosing(e);
@@ -327,10 +350,11 @@ namespace SeeThroughWindows
     {
       base.OnClosed(e);
 
-      // Restore all windows
-      foreach (IntPtr handle in this.windows.Keys)
+      // Restore all windows, ignoring exceptions. If there's an error,
+      // we can't really do anything about it now
+      foreach (IntPtr handle in this.hijackedWindows.Keys)
       {
-        WindowInfo w = this.windows[handle];
+        WindowInfo w = this.hijackedWindows[handle];
         try
         {
           SetLayeredWindowAttributes(handle, 0, w.OriginalAlpha, LWA_ALPHA);
@@ -349,12 +373,11 @@ namespace SeeThroughWindows
     }
     #endregion
 
-    #region Event handlers
+    #region Hotkey Event handlers
+
     /// <summary>
     /// The hotkey was pressed! Handle it
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
     private void UserHotkey_Pressed(object sender, HandledEventArgs e)
     {
       IntPtr activeWindowHandle = GetForegroundWindow();
@@ -369,36 +392,15 @@ namespace SeeThroughWindows
 
         // Do we know this window?
         WindowInfo window = null;
-        if (windows.ContainsKey(activeWindowHandle))
-          window = windows[activeWindowHandle];
-
-        uint newStyle = this.clickThroughCheckBox.Checked ? NEW_STYLE_CLICKTHROUGH : NEW_STYLE_TRANSPARENT;
-
-        if (window == null)
-        {
-          // See if we need to make the window transparent
-          uint originalStyle = GetWindowLong(activeWindowHandle, GWL_EX_STYLE);
-          short originalAlpha = OPAQUE;
-
-          if ((originalStyle & newStyle) != newStyle)
-          {
-            SetWindowLong(activeWindowHandle, GWL_EX_STYLE, originalStyle | newStyle);
-          }
-          else
-          {
-            int transparentColor;
-            int action;
-
-            if (!GetLayeredWindowAttributes(activeWindowHandle, out transparentColor, out originalAlpha, out action))
-              originalAlpha = OPAQUE;
-          }
-          window = new WindowInfo(originalStyle, originalAlpha);
-          windows[activeWindowHandle] = window;
-        }
+        if (this.hijackedWindows.ContainsKey(activeWindowHandle))
+          window = this.hijackedWindows[activeWindowHandle];
+        else
+          window = HijackWindow(activeWindowHandle);
 
         short newAlpha = window.CurrentAlpha;
 
-        if (newAlpha == OPAQUE) // Opaque
+        // Toggle the alpha value betwee OPAQUE and semitransparent
+        if (newAlpha == OPAQUE)
           newAlpha = this.semiTransparentValue;
         else
           newAlpha = OPAQUE;
@@ -406,7 +408,6 @@ namespace SeeThroughWindows
         if (!SetLayeredWindowAttributes(activeWindowHandle, 0, newAlpha, LWA_ALPHA))
         {
           this.notifyIcon.ShowBalloonTip(3000, "See Through Windows", "Could not set transparency on this window", ToolTipIcon.Error);
-          // MessageBox.Show(this, "Could not set transparency on window " + activeWindowHandle.ToString(), "SeeThroughWindows", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         else
         {
@@ -420,15 +421,20 @@ namespace SeeThroughWindows
         // If the window is not transparent anymore, we're not interested anymore
         if (newAlpha == OPAQUE)
         {
+          // Restore the old window style
           RestoreStyle(activeWindowHandle, window.Style);
-          windows.Remove(activeWindowHandle);
+          // Let go of the window info
+          this.hijackedWindows.Remove(activeWindowHandle);
         }
 
         e.Handled = true;
       }
     }
 
-    void MinimizeHotkey_Pressed(object sender, HandledEventArgs e)
+    /// <summary>
+    /// Minimize the current window
+    /// </summary>
+    private void MinimizeHotkey_Pressed(object sender, HandledEventArgs e)
     {
       IntPtr activeWindowHandle = GetForegroundWindow();
 
@@ -476,7 +482,10 @@ namespace SeeThroughWindows
       }
     }
 
-    void MaximizeHotkey_Pressed(object sender, HandledEventArgs e)
+    /// <summary>
+    /// Maximize the current window
+    /// </summary>
+    private void MaximizeHotkey_Pressed(object sender, HandledEventArgs e)
     {
       IntPtr activeWindowHandle = GetForegroundWindow();
 
@@ -524,16 +533,108 @@ namespace SeeThroughWindows
       }
     }
 
-    void PreviousScreenHotkey_Pressed(object sender, HandledEventArgs e)
+    /// <summary>
+    /// Move the active window to the previous screen
+    /// </summary>
+    private void PreviousScreenHotkey_Pressed(object sender, HandledEventArgs e)
     {
       e.Handled = MoveActiveWindowToScreen(-1);
     }
 
-    void NextScreenHotkey_Pressed(object sender, HandledEventArgs e)
+    /// <summary>
+    /// Move the active window to the next screen
+    /// </summary>
+    private void NextScreenHotkey_Pressed(object sender, HandledEventArgs e)
     {
       e.Handled = MoveActiveWindowToScreen(+1);
     }
 
+    /// <summary>
+    /// Make the active window more transparent
+    /// </summary>
+    private void MoreTransparentHotkey_Pressed(object sender, HandledEventArgs e)
+    {
+      e.Handled = ChangeAlpha(GetForegroundWindow(), -16);
+    }
+
+    /// <summary>
+    /// Make the active window less transparent
+    /// </summary>
+    private void LessTransparentHotkey_Pressed(object sender, HandledEventArgs e)
+    {
+      e.Handled = ChangeAlpha(GetForegroundWindow(), +16);
+    }
+#endregion
+
+    #region Implementation
+    /// <summary>
+    /// Change the alpha value of a window handle.
+    /// 
+    /// If the window has not been 'transparenticized', it will be
+    /// </summary>
+    /// <param name="windowHandle">The window handle</param>
+    /// <param name="change">The change in the alpha value</param>
+    /// <returns>true if successful</returns>
+    protected bool ChangeAlpha(IntPtr windowHandle, short change)
+    {
+      if (windowHandle == IntPtr.Zero)
+        return false;
+
+      // Do we know this window?
+      WindowInfo window = null;
+      if (!this.hijackedWindows.ContainsKey(windowHandle))
+      {
+        // No - hijack it
+        window = HijackWindow(windowHandle);
+        // Start with the default transparency value
+        if (!SetLayeredWindowAttributes(windowHandle, 0, this.semiTransparentValue, LWA_ALPHA))
+        {
+          this.notifyIcon.ShowBalloonTip(3000, "See Through Windows", "Could not set transparency on this window", ToolTipIcon.Error);
+        }
+      }
+      else
+        // Yes, get the window information
+        window = this.hijackedWindows[windowHandle];
+
+      // Get the alpha value of the window
+      int transparentColor;
+      int action;
+      short originalAlpha;
+
+      if (!GetLayeredWindowAttributes(windowHandle, out transparentColor, out originalAlpha, out action))
+      {
+        this.notifyIcon.ShowBalloonTip(3000, "See Through Windows", "Could not get transparency of this window", ToolTipIcon.Error);
+        return false;
+      }
+      else
+      {
+        // Treat 255 as 256 for a nice decrease by step 16
+        if (originalAlpha == 255) originalAlpha = 256;
+        // Update the alpha value
+        short newAlpha = (short)(originalAlpha + change);
+        // Maximinze/minimize to 0-255
+        if (newAlpha > 255) newAlpha = 255; else if (newAlpha < 0) newAlpha = 0;
+
+        // Try to apply new alpha
+        if (!SetLayeredWindowAttributes(windowHandle, 0, newAlpha, LWA_ALPHA))
+        {
+          this.notifyIcon.ShowBalloonTip(3000, "See Through Windows", "Could not set transparency on this window", ToolTipIcon.Error);
+          return false;
+        }
+        else
+        {
+          // Update the aplha value. Unused so far but hey
+          window.CurrentAlpha = newAlpha;
+          return true;
+        }
+      }
+    }
+
+    /// <summary>
+    /// Move the active window to the next or previous screen
+    /// </summary>
+    /// <param name="offset">+1: next screen, -1: previous screen</param>
+    /// <returns>true if successful</returns>
     protected bool MoveActiveWindowToScreen(int offset)
     {
       IntPtr activeWindowHandle = GetForegroundWindow();
@@ -661,10 +762,55 @@ namespace SeeThroughWindows
     }
 
     /// <summary>
-    /// Update the hotkey settings. Event handler for the key code and check boxes!
+    /// Hijack (e.g. transparenticize) a window. Create a WindowInfo for it,
+    /// set window style etc. based on current settings
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
+    /// <param name="windowHandle">The window handle to hijack</param>
+    /// <returns>The WindowInfo object for the window handle</returns>
+    private WindowInfo HijackWindow(IntPtr windowHandle)
+    {
+      // If the window is already hijacked, simply return the existing WindowInfo object
+      if (this.hijackedWindows.ContainsKey(windowHandle))
+        return this.hijackedWindows[windowHandle];
+
+      // See if we need to make the window transparent
+      uint originalStyle = GetWindowLong(windowHandle, GWL_EX_STYLE);
+
+      // This is the style we need
+      uint style = this.clickThroughCheckBox.Checked ? NEW_STYLE_CLICKTHROUGH : NEW_STYLE_TRANSPARENT;
+
+      // Obtain the original alpha value of the window
+      short originalAlpha;
+
+      // Does it have all the necessary styles?
+      if ((originalStyle & style) != style)
+      {
+        // No: set them and assume the window is opaque
+        SetWindowLong(windowHandle, GWL_EX_STYLE, originalStyle | style);
+        originalAlpha = OPAQUE;
+      }
+      else
+      {
+        int transparentColor;
+        int action;
+
+        // Get the alpha value. In case of failure, assume OPAQUE
+        if (!GetLayeredWindowAttributes(windowHandle, out transparentColor, out originalAlpha, out action))
+          originalAlpha = OPAQUE;
+      }
+
+      // Create a new WindowInfo
+      WindowInfo window = new WindowInfo(originalStyle, originalAlpha);
+      // Store it in our window list
+      this.hijackedWindows[windowHandle] = window;
+
+      return window;
+    }
+
+    /// <summary>
+    /// Update the hotkey settings
+    /// This is the event handler for the key code and check boxes!
+    /// </summary>
     private void UpdateHotKey(object sender, EventArgs e)
     {
       if (this.loading)
@@ -672,107 +818,11 @@ namespace SeeThroughWindows
 
       this.userHotkey.Reregister((Keys)hotKeyComboBox.SelectedItem, shiftCheckBox.Checked, controlCheckBox.Checked, altCheckBox.Checked, windowsCheckBox.Checked);
     }
-
-    /// <summary>
-    /// Update the transparency when the track bar changes
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void transparencyTrackBar_ValueChanged(object sender, EventArgs e)
-    {
-      if (this.loading)
-        return;
-
-      UpdateTransparency();
-
-      if (previewCheckBox.Checked)
-        ApplyTransparency();
-    }
-
-    /// <summary>
-    /// Preview the current transparency, or reset it
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void previewCheckBox_CheckedChanged(object sender, EventArgs e)
-    {
-      if (this.loading)
-        return;
-
-      if (previewCheckBox.Checked)
-        ApplyTransparency();
-      else
-        this.Opacity = 1.0;
-    }
-
-    /// <summary>
-    /// Surf to the web site
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void helpLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-    {
-      try
-      {
-        Cursor.Current = Cursors.WaitCursor;
-        Process.Start("http://www.mobzystems.com/Tools/SeeThroughWindows.aspx");
-      }
-      finally
-      {
-        Cursor.Current = Cursors.Default;
-      }
-    }
-
-    /// <summary>
-    /// Show ourselves when the notify icon was clicked
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void notifyIcon_DoubleClick(object sender, EventArgs e)
-    {
-      if (!this.Visible)
-        Show();
-
-      Activate();
-    }
-
-    /// <summary>
-    /// Really close the form from the exit menu
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-      this.exitingApplication = true;
-      Close();
-
-      Application.Exit();
-    }
-    #endregion
-
-    #region Conversion helpers
-    private string BoolToString(bool b)
-    {
-      if (b)
-        return "1";
-      else
-        return "0";
-    }
-
-    private bool BoolFromString(string s)
-    {
-      if (s == null || s != "1")
-        return false;
-      else
-        return true;
-    }
-    #endregion
-
     /// <summary>
     /// Restore the window style based on the original style
     /// </summary>
-    /// <param name="handle"></param>
-    /// <param name="originalStyle"></param>
+    /// <param name="handle">Window handle</param>
+    /// <param name="originalStyle">Original style</param>
     private void RestoreStyle(IntPtr handle, uint originalStyle)
     {
       uint style = GetWindowLong(handle, GWL_EX_STYLE);
@@ -800,6 +850,23 @@ namespace SeeThroughWindows
     }
 
     /// <summary>
+    /// Register or unregister a hotkey
+    /// </summary>
+    private void RegisterHotkey(MOBZystems.Hotkey hotkey, bool register)
+    {
+      if (register)
+      {
+        if (!hotkey.IsRegistered)
+          hotkey.Register(this);
+      }
+      else
+      {
+        if (hotkey.IsRegistered)
+          hotkey.Unregister();
+      }
+    }
+
+    /// <summary>
     /// Save the settings to the registry
     /// </summary>
     private void SaveSettings()
@@ -815,55 +882,141 @@ namespace SeeThroughWindows
       root.SetValue("Alt", BoolToString(this.userHotkey.Alt));
       root.SetValue("Windows", BoolToString(this.userHotkey.Windows));
 
-      root.SetValue("EnableUpDown", BoolToString(this.minMaxEnabledCheckBox.Checked));
       root.SetValue("EnableLeftRight", BoolToString(this.sendToMonitorEnabledCheckBox.Checked));
+      root.SetValue("EnableUpDown", BoolToString(this.minMaxEnabledCheckBox.Checked));
+      root.SetValue("EnablePageUpDown", BoolToString(this.enableChangeTransparencyCheckbox.Checked));
+    }
+    #endregion
+
+    #region UI Event Handlers
+    /// <summary>
+    /// Update the transparency when the track bar changes
+    /// </summary>
+    private void transparencyTrackBar_ValueChanged(object sender, EventArgs e)
+    {
+      if (this.loading)
+        return;
+
+      UpdateTransparency();
+
+      if (previewCheckBox.Checked)
+        ApplyTransparency();
     }
 
+    /// <summary>
+    /// Preview the current transparency, or reset it
+    /// </summary>
+    private void previewCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+      if (this.loading)
+        return;
+
+      if (previewCheckBox.Checked)
+        ApplyTransparency();
+      else
+        this.Opacity = 1.0;
+    }
+
+    /// <summary>
+    /// Surf to the web site
+    /// </summary>
+    private void helpLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    {
+      try
+      {
+        Cursor.Current = Cursors.WaitCursor;
+        Process.Start("http://www.mobzystems.com/Tools/SeeThroughWindows");
+      }
+      finally
+      {
+        Cursor.Current = Cursors.Default;
+      }
+    }
+
+    /// <summary>
+    /// Show ourselves when the notify icon was clicked
+    /// </summary>
+    private void notifyIcon_DoubleClick(object sender, EventArgs e)
+    {
+      if (!this.Visible)
+        Show();
+
+      Activate();
+    }
+
+    /// <summary>
+    /// Really close the form from the exit menu
+    /// </summary>
+    private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      this.exitingApplication = true;
+      Close();
+
+      Application.Exit();
+    }
+
+    /// <summary>
+    /// (Un)register hotkeys for window minimize/maximize
+    /// </summary>
     private void minMaxEnabledCheckBox_CheckedChanged(object sender, EventArgs e)
     {
       if (this.loading)
         return;
 
-      if (minMaxEnabledCheckBox.Checked)
-      {
-        if (!this.minimizeHotkey.IsRegistered)
-          this.minimizeHotkey.Register(this);
-        if (!this.maximizeHotkey.IsRegistered)
-          this.maximizeHotkey.Register(this);
-      }
-      else
-      {
-        if (this.minimizeHotkey.IsRegistered)
-          this.minimizeHotkey.Unregister();
-        if (this.maximizeHotkey.IsRegistered)
-          this.maximizeHotkey.Unregister();
-      }
+      RegisterHotkey(this.minimizeHotkey, minMaxEnabledCheckBox.Checked);
+      RegisterHotkey(this.maximizeHotkey, minMaxEnabledCheckBox.Checked);
     }
 
+    /// <summary>
+    /// (Un)register hotkeys for move window
+    /// </summary>
     private void sendToMonitorEnabledCheckBox_CheckedChanged(object sender, EventArgs e)
     {
       if (this.loading)
         return;
 
-      if (sendToMonitorEnabledCheckBox.Checked)
-      {
-        if (!this.previousScreenHotkey.IsRegistered)
-          this.previousScreenHotkey.Register(this);
-        if (!this.nextScreenHotkey.IsRegistered)
-          this.nextScreenHotkey.Register(this);
-      }
-      else
-      {
-        if (this.previousScreenHotkey.IsRegistered)
-          this.previousScreenHotkey.Unregister();
-        if (this.nextScreenHotkey.IsRegistered)
-          this.nextScreenHotkey.Unregister();
-      }
+      RegisterHotkey(this.previousScreenHotkey, this.sendToMonitorEnabledCheckBox.Checked);
+      RegisterHotkey(this.nextScreenHotkey, this.sendToMonitorEnabledCheckBox.Checked);
     }
 
+    /// <summary>
+    /// (Un)register hotkeys for window transparency change
+    /// </summary>
+    private void enableChangeTransparencyCheckbox_CheckedChanged(object sender, EventArgs e)
+    {
+      if (this.loading)
+        return;
+
+      RegisterHotkey(this.moreTransparentHotkey, enableChangeTransparencyCheckbox.Checked);
+      RegisterHotkey(this.lessTransparentHotkey, enableChangeTransparencyCheckbox.Checked);
+    }
+
+    /// <summary>
+    /// Enable topmost if clickthrough
+    /// </summary>
     private void clickThroughCheckBox_CheckedChanged(object sender, EventArgs e)
     {
       topMostCheckBox.Enabled = clickThroughCheckBox.Checked;
     }
+    #endregion
+
+    #region Conversion helpers
+    private string BoolToString(bool b)
+    {
+      if (b)
+        return "1";
+      else
+        return "0";
+    }
+
+    private bool BoolFromString(string s)
+    {
+      if (s == null || s != "1")
+        return false;
+      else
+        return true;
+    }
+    #endregion
+
   }
 }

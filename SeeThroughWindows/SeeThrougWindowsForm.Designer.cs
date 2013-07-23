@@ -49,11 +49,12 @@ namespace SeeThroughWindows
       this.previewCheckBox = new System.Windows.Forms.CheckBox();
       this.helpLink = new System.Windows.Forms.LinkLabel();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
+      this.enableChangeTransparencyCheckbox = new System.Windows.Forms.CheckBox();
+      this.topMostCheckBox = new System.Windows.Forms.CheckBox();
       this.clickThroughCheckBox = new System.Windows.Forms.CheckBox();
       this.groupBox2 = new System.Windows.Forms.GroupBox();
       this.sendToMonitorEnabledCheckBox = new System.Windows.Forms.CheckBox();
       this.minMaxEnabledCheckBox = new System.Windows.Forms.CheckBox();
-      this.topMostCheckBox = new System.Windows.Forms.CheckBox();
       toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       label1 = new System.Windows.Forms.Label();
       label2 = new System.Windows.Forms.Label();
@@ -74,21 +75,23 @@ namespace SeeThroughWindows
       // 
       // label1
       // 
-      label1.Location = new System.Drawing.Point(59, 20);
+      label1.AutoSize = true;
+      label1.Location = new System.Drawing.Point(6, 20);
       label1.Name = "label1";
-      label1.Size = new System.Drawing.Size(53, 18);
+      label1.Size = new System.Drawing.Size(45, 13);
       label1.TabIndex = 0;
       label1.Text = "&Hotkey:";
-      label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+      label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
       // 
       // label2
       // 
-      label2.Location = new System.Drawing.Point(15, 79);
+      label2.AutoSize = true;
+      label2.Location = new System.Drawing.Point(6, 79);
       label2.Name = "label2";
-      label2.Size = new System.Drawing.Size(97, 19);
+      label2.Size = new System.Drawing.Size(77, 13);
       label2.TabIndex = 6;
       label2.Text = "&Transparency:";
-      label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+      label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
       // 
       // label3
       // 
@@ -165,7 +168,7 @@ namespace SeeThroughWindows
       this.hotKeyComboBox.FormattingEnabled = true;
       this.hotKeyComboBox.Location = new System.Drawing.Point(118, 20);
       this.hotKeyComboBox.Name = "hotKeyComboBox";
-      this.hotKeyComboBox.Size = new System.Drawing.Size(235, 21);
+      this.hotKeyComboBox.Size = new System.Drawing.Size(269, 21);
       this.hotKeyComboBox.TabIndex = 1;
       this.hotKeyComboBox.SelectedIndexChanged += new System.EventHandler(this.UpdateHotKey);
       // 
@@ -209,7 +212,7 @@ namespace SeeThroughWindows
       this.transparencyTrackBar.Maximum = 250;
       this.transparencyTrackBar.Minimum = 10;
       this.transparencyTrackBar.Name = "transparencyTrackBar";
-      this.transparencyTrackBar.Size = new System.Drawing.Size(251, 45);
+      this.transparencyTrackBar.Size = new System.Drawing.Size(278, 45);
       this.transparencyTrackBar.SmallChange = 8;
       this.transparencyTrackBar.TabIndex = 7;
       this.transparencyTrackBar.TickFrequency = 16;
@@ -220,7 +223,7 @@ namespace SeeThroughWindows
       // 
       this.previewCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.previewCheckBox.AutoSize = true;
-      this.previewCheckBox.Location = new System.Drawing.Point(10, 206);
+      this.previewCheckBox.Location = new System.Drawing.Point(6, 204);
       this.previewCheckBox.Name = "previewCheckBox";
       this.previewCheckBox.Size = new System.Drawing.Size(131, 17);
       this.previewCheckBox.TabIndex = 12;
@@ -230,21 +233,24 @@ namespace SeeThroughWindows
       // 
       // helpLink
       // 
-      this.helpLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.helpLink.Location = new System.Drawing.Point(263, 322);
+      this.helpLink.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.helpLink.Location = new System.Drawing.Point(12, 345);
       this.helpLink.Name = "helpLink";
-      this.helpLink.Size = new System.Drawing.Size(235, 18);
+      this.helpLink.Size = new System.Drawing.Size(463, 23);
       this.helpLink.TabIndex = 2;
       this.helpLink.TabStop = true;
-      this.helpLink.Text = "See Through Windows v# by MOBZystems";
-      this.helpLink.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+      this.helpLink.Text = "See Through Windows (#3264#-bit) v#V# by MOBZystems";
+      this.helpLink.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
       this.helpLink.VisitedLinkColor = System.Drawing.Color.Blue;
       this.helpLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.helpLink_LinkClicked);
       // 
       // groupBox1
       // 
-      this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.groupBox1.Controls.Add(this.enableChangeTransparencyCheckbox);
       this.groupBox1.Controls.Add(this.topMostCheckBox);
       this.groupBox1.Controls.Add(this.clickThroughCheckBox);
       this.groupBox1.Controls.Add(this.hotKeyComboBox);
@@ -260,10 +266,33 @@ namespace SeeThroughWindows
       this.groupBox1.Controls.Add(this.transparencyTrackBar);
       this.groupBox1.Location = new System.Drawing.Point(82, 12);
       this.groupBox1.Name = "groupBox1";
-      this.groupBox1.Size = new System.Drawing.Size(414, 229);
+      this.groupBox1.Size = new System.Drawing.Size(393, 250);
       this.groupBox1.TabIndex = 0;
       this.groupBox1.TabStop = false;
       this.groupBox1.Text = "Make window transparent";
+      // 
+      // enableChangeTransparencyCheckbox
+      // 
+      this.enableChangeTransparencyCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+      this.enableChangeTransparencyCheckbox.AutoSize = true;
+      this.enableChangeTransparencyCheckbox.Location = new System.Drawing.Point(6, 227);
+      this.enableChangeTransparencyCheckbox.Name = "enableChangeTransparencyCheckbox";
+      this.enableChangeTransparencyCheckbox.Size = new System.Drawing.Size(365, 17);
+      this.enableChangeTransparencyCheckbox.TabIndex = 13;
+      this.enableChangeTransparencyCheckbox.Text = "Enable Control+Windows+PageUp/PageDown to change &transparency";
+      this.enableChangeTransparencyCheckbox.UseVisualStyleBackColor = true;
+      this.enableChangeTransparencyCheckbox.CheckedChanged += new System.EventHandler(this.enableChangeTransparencyCheckbox_CheckedChanged);
+      // 
+      // topMostCheckBox
+      // 
+      this.topMostCheckBox.AutoSize = true;
+      this.topMostCheckBox.Enabled = false;
+      this.topMostCheckBox.Location = new System.Drawing.Point(134, 170);
+      this.topMostCheckBox.Name = "topMostCheckBox";
+      this.topMostCheckBox.Size = new System.Drawing.Size(205, 17);
+      this.topMostCheckBox.TabIndex = 11;
+      this.topMostCheckBox.Text = "... and keep &on top of other windows";
+      this.topMostCheckBox.UseVisualStyleBackColor = true;
       // 
       // clickThroughCheckBox
       // 
@@ -278,13 +307,13 @@ namespace SeeThroughWindows
       // 
       // groupBox2
       // 
-      this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.groupBox2.Controls.Add(this.sendToMonitorEnabledCheckBox);
       this.groupBox2.Controls.Add(this.minMaxEnabledCheckBox);
-      this.groupBox2.Location = new System.Drawing.Point(82, 247);
+      this.groupBox2.Location = new System.Drawing.Point(82, 268);
       this.groupBox2.Name = "groupBox2";
-      this.groupBox2.Size = new System.Drawing.Size(414, 72);
+      this.groupBox2.Size = new System.Drawing.Size(393, 74);
       this.groupBox2.TabIndex = 1;
       this.groupBox2.TabStop = false;
       this.groupBox2.Text = "Move window";
@@ -292,7 +321,7 @@ namespace SeeThroughWindows
       // sendToMonitorEnabledCheckBox
       // 
       this.sendToMonitorEnabledCheckBox.AutoSize = true;
-      this.sendToMonitorEnabledCheckBox.Location = new System.Drawing.Point(10, 45);
+      this.sendToMonitorEnabledCheckBox.Location = new System.Drawing.Point(6, 43);
       this.sendToMonitorEnabledCheckBox.Name = "sendToMonitorEnabledCheckBox";
       this.sendToMonitorEnabledCheckBox.Size = new System.Drawing.Size(372, 17);
       this.sendToMonitorEnabledCheckBox.TabIndex = 1;
@@ -303,7 +332,7 @@ namespace SeeThroughWindows
       // minMaxEnabledCheckBox
       // 
       this.minMaxEnabledCheckBox.AutoSize = true;
-      this.minMaxEnabledCheckBox.Location = new System.Drawing.Point(10, 22);
+      this.minMaxEnabledCheckBox.Location = new System.Drawing.Point(6, 20);
       this.minMaxEnabledCheckBox.Name = "minMaxEnabledCheckBox";
       this.minMaxEnabledCheckBox.Size = new System.Drawing.Size(347, 17);
       this.minMaxEnabledCheckBox.TabIndex = 0;
@@ -311,22 +340,11 @@ namespace SeeThroughWindows
       this.minMaxEnabledCheckBox.UseVisualStyleBackColor = true;
       this.minMaxEnabledCheckBox.CheckedChanged += new System.EventHandler(this.minMaxEnabledCheckBox_CheckedChanged);
       // 
-      // topMostCheckBox
-      // 
-      this.topMostCheckBox.AutoSize = true;
-      this.topMostCheckBox.Enabled = false;
-      this.topMostCheckBox.Location = new System.Drawing.Point(134, 170);
-      this.topMostCheckBox.Name = "topMostCheckBox";
-      this.topMostCheckBox.Size = new System.Drawing.Size(205, 17);
-      this.topMostCheckBox.TabIndex = 11;
-      this.topMostCheckBox.Text = "... and keep &on top of other windows";
-      this.topMostCheckBox.UseVisualStyleBackColor = true;
-      // 
       // SeeThrougWindowsForm
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(508, 349);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+      this.ClientSize = new System.Drawing.Size(487, 377);
       this.Controls.Add(this.groupBox2);
       this.Controls.Add(this.groupBox1);
       this.Controls.Add(this.helpLink);
@@ -370,6 +388,7 @@ namespace SeeThroughWindows
     private System.Windows.Forms.CheckBox minMaxEnabledCheckBox;
     private System.Windows.Forms.CheckBox clickThroughCheckBox;
     private System.Windows.Forms.CheckBox topMostCheckBox;
+    private System.Windows.Forms.CheckBox enableChangeTransparencyCheckbox;
   }
 }
 

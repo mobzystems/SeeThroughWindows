@@ -10,10 +10,14 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SeeThroughWindows</RootNamespace>
     <AssemblyName>SeeThroughWindows</AssemblyName>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
     <ApplicationIcon>images\Glasses-64B.ico</ApplicationIcon>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileUpgradeFlags>
@@ -78,14 +82,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="images\glasses-64.ico" />
-    <Content Include="images\glasses-64.png" />
-    <Content Include="images\Glasses-64B.ico" />
-    <Content Include="images\Glasses-64B.png" />
-    <Content Include="images\Glasses-64C.ico" />
-    <Content Include="images\Glasses-64C.png" />
-    <Content Include="images\Glasses-64D.ico" />
-    <Content Include="images\Glasses-64D.png" />
+    <None Include="images\glasses-64.ico" />
+    <None Include="images\glasses-64.png" />
+    <None Include="images\Glasses-64B.ico" />
+    <None Include="images\Glasses-64B.png" />
+    <None Include="images\Glasses-64C.ico" />
+    <None Include="images\Glasses-64C.png" />
+    <None Include="images\Glasses-64D.ico" />
+    <None Include="images\Glasses-64D.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
