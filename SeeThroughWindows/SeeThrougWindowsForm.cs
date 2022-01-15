@@ -925,7 +925,9 @@ namespace SeeThroughWindows
       try
       {
         Cursor.Current = Cursors.WaitCursor;
-        Process.Start("http://www.mobzystems.com/Tools/SeeThroughWindows");
+        var psi = new ProcessStartInfo("http://www.mobzystems.com/Tools/SeeThroughWindows");
+        psi.UseShellExecute = true;
+        Process.Start(psi);
       }
       finally
       {

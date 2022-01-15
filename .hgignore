@@ -1,9 +1,0 @@
-syntax: glob
-*.suo
-*.vbproj.user
-*.csproj.user
-*/Debug/*
-*/Release/*
-SeeThroughWindows/images/Glasses-32B.png
-SeeThroughWindows.sln.docstates
-SeeThroughWindows/images/.docstates

@@ -15,14 +15,8 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_B6FAEA270FD647008A3D5BAA29C62FD5"
+        "MsmKey" = "8:_3348BC3490524948A07EA6529ABB97DE"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B6FAEA270FD647008A3D5BAA29C62FD5"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -98,6 +92,16 @@
         {
             "LaunchCondition"
             {
+                "{A06ECF26-33A3-4562-8140-9B0E340D4F24}:_7D231905797D4A8E9E3EDF2B1D0A57D6"
+                {
+                "Name" = "8:.NET Core"
+                "Message" = "8:[VSDNETCOREMSG]"
+                "AllowLaterVersions" = "11:FALSE"
+                "InstallUrl" = "8:https://dotnet.microsoft.com/download/dotnet-core/[NetCoreVerMajorDotMinor]"
+                "IsNETCore" = "11:TRUE"
+                "Architecture" = "2:0"
+                "Runtime" = "2:0"
+                }
                 "{A06ECF26-33A3-4562-8140-9B0E340D4F24}:_E11E996105234BDCA8AFFF6139F9F5EA"
                 {
                 "Name" = "8:.NET Framework"
@@ -110,6 +114,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3348BC3490524948A07EA6529ABB97DE"
+            {
+            "SourcePath" = "8:..\\SeeThroughWindows\\images\\Glasses-64B.ico"
+            "TargetName" = "8:SeeThroughWindows.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_B46C24B3D9F4483484BA3B31CC7785EA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -177,24 +201,24 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:See Through Windows"
-        "ProductCode" = "8:{02229003-D5FD-4C1E-AEDC-F55A62EE4CCA}"
-        "PackageCode" = "8:{51280085-5694-4791-90F9-8E0335D439B2}"
+        "ProductCode" = "8:{21BE65F3-DFB7-46CB-8BAC-7B13C345A1DC}"
+        "PackageCode" = "8:{7A7E7599-7F33-42DA-86A5-AABA55D5B3BF}"
         "UpgradeCode" = "8:{2CBC465E-0AB2-4C31-BBCF-C48C5D90505C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.6"
+        "ProductVersion" = "8:1.0.7"
         "Manufacturer" = "8:MOBZystems"
         "ARPHELPTELEPHONE" = "8:"
-        "ARPHELPLINK" = "8:http://www.mobzystems.com/Tools/SeeThroughWindows.aspx"
+        "ARPHELPLINK" = "8:http://www.mobzystems.com/Tools/SeeThroughWindows"
         "Title" = "8:[ProductName] Setup"
         "Subject" = "8:"
         "ARPCONTACT" = "8:MOBZystems"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:See Through Windows Setup"
-        "ARPURLINFOABOUT" = "8:http://www.mobzystems.com/Tools/SeeThroughWindows.aspx"
+        "ARPURLINFOABOUT" = "8:http://www.mobzystems.com/Tools/SeeThroughWindows"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
@@ -304,12 +328,12 @@
             "Arguments" = "8:"
             "Description" = "8:Start See Through Windows"
             "ShowCmd" = "3:1"
-            "IconIndex" = "3:32512"
+            "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_B6FAEA270FD647008A3D5BAA29C62FD5"
+            "Target" = "8:_B1916A607C73414B878F8CBA39DDA098"
             "Folder" = "8:_85D5495D60B242F7992F097C1A39BF2F"
             "WorkingFolder" = "8:_B46C24B3D9F4483484BA3B31CC7785EA"
-            "Icon" = "8:_B6FAEA270FD647008A3D5BAA29C62FD5"
+            "Icon" = "8:_3348BC3490524948A07EA6529ABB97DE"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_9AD96C11FF504E46A4059B567FD13C70"
@@ -318,12 +342,12 @@
             "Arguments" = "8:"
             "Description" = "8:Show See Through Windows in the System Tray"
             "ShowCmd" = "3:1"
-            "IconIndex" = "3:32512"
+            "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_B6FAEA270FD647008A3D5BAA29C62FD5"
+            "Target" = "8:_B1916A607C73414B878F8CBA39DDA098"
             "Folder" = "8:_B80C8C3EDB56459D92518A82D7C8E2E0"
             "WorkingFolder" = "8:_B46C24B3D9F4483484BA3B31CC7785EA"
-            "Icon" = "8:_B6FAEA270FD647008A3D5BAA29C62FD5"
+            "Icon" = "8:_3348BC3490524948A07EA6529ABB97DE"
             "Feature" = "8:"
             }
         }
@@ -725,9 +749,9 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B6FAEA270FD647008A3D5BAA29C62FD5"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B1916A607C73414B878F8CBA39DDA098"
             {
-            "SourcePath" = "8:..\\SeeThroughWindows\\obj\\Debug\\SeeThroughWindows.exe"
+            "SourcePath" = "8:..\\SeeThroughWindows\\bin\\Release\\net6.0-windows\\publish\\win-x86\\SeeThroughWindows.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B46C24B3D9F4483484BA3B31CC7785EA"
@@ -745,10 +769,11 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:Built"
+            "OutputConfiguration" = "8:Release|Any CPU"
+            "OutputGroupCanonicalName" = "8:PublishItems"
             "OutputProjectGuid" = "8:{00E2FF0D-A3DD-4EBE-995D-67A4408C2B69}"
             "ShowKeyOutput" = "11:TRUE"
+            "PublishProfilePath" = "8:Properties\\PublishProfiles\\PublishForSetup.pubxml"
                 "ExcludeFilters"
                 {
                 }
