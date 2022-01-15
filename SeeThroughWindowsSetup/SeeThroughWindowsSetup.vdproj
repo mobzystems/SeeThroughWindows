@@ -202,7 +202,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:See Through Windows"
         "ProductCode" = "8:{21BE65F3-DFB7-46CB-8BAC-7B13C345A1DC}"
-        "PackageCode" = "8:{7A7E7599-7F33-42DA-86A5-AABA55D5B3BF}"
+        "PackageCode" = "8:{E9E7A442-CE66-45D4-BC17-5B26EC9AF2F4}"
         "UpgradeCode" = "8:{2CBC465E-0AB2-4C31-BBCF-C48C5D90505C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -326,8 +326,8 @@
             {
             "Name" = "8:See Through Windows"
             "Arguments" = "8:"
-            "Description" = "8:Start See Through Windows"
-            "ShowCmd" = "3:1"
+            "Description" = "8:Start See Through Windows automatically in the system tray"
+            "ShowCmd" = "3:7"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
             "Target" = "8:_B1916A607C73414B878F8CBA39DDA098"
@@ -340,7 +340,7 @@
             {
             "Name" = "8:See Through Windows"
             "Arguments" = "8:"
-            "Description" = "8:Show See Through Windows in the System Tray"
+            "Description" = "8:Start See Through Windows"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"

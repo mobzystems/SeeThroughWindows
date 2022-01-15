@@ -385,6 +385,7 @@ namespace SeeThroughWindows
       this.MinimizeBox = false;
       this.Name = "SeeThrougWindowsForm";
       this.Text = "See Through Windows Options";
+      this.Shown += new System.EventHandler(this.SeeThrougWindowsForm_Shown);
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
       this.contextMenuStrip.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.transparencyTrackBar)).EndInit();

@@ -249,8 +249,8 @@ namespace SeeThroughWindows
       bool altKey = BoolFromString((string)root.GetValue("Alt", "0"));
       bool windowsKey = BoolFromString((string)root.GetValue("Windows", "0"));
 
-      this.sendToMonitorEnabledCheckBox.Checked = BoolFromString((string)root.GetValue("EnableLeftRight", "1"));
-      this.minMaxEnabledCheckBox.Checked = BoolFromString((string)root.GetValue("EnableUpDown", "1"));
+      this.sendToMonitorEnabledCheckBox.Checked = BoolFromString((string)root.GetValue("EnableLeftRight", "0"));
+      this.minMaxEnabledCheckBox.Checked = BoolFromString((string)root.GetValue("EnableUpDown", "0"));
       this.enableChangeTransparencyCheckbox.Checked = BoolFromString((string)root.GetValue("EnablePageUpDown", "1"));
 
       // Create a hot key with the settings:
@@ -323,6 +323,18 @@ namespace SeeThroughWindows
     #endregion
 
     #region Overridden methods
+
+    private void SeeThrougWindowsForm_Shown(object sender, EventArgs e)
+    {
+      // Make sure we hide ourselves when started minimized
+      if (this.WindowState == FormWindowState.Minimized)
+      {
+        // This causes a breif flash but swapping WindowState and Hide causes the form
+        // to stay minimized and to never become Normal
+        this.WindowState = FormWindowState.Normal;
+        this.Hide();
+      }
+    }
 
     /// <summary>
     /// Make sure we hide when the user wants to close,
@@ -1022,6 +1034,5 @@ namespace SeeThroughWindows
         return true;
     }
     #endregion
-
   }
 }
