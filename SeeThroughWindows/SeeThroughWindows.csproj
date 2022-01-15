@@ -16,6 +16,7 @@
     <Copyright>Copyright © 2008-2022, MOBZystems BV, Amsterdam</Copyright>
     <Description>See Through Windows Tool</Description>
     <PackageIcon>Glasses-64B.png</PackageIcon>
+    <Version>1.0.7</Version>
     <!-- DO NOT SET THESE PROPERTIES -->
     <!-- Setting a font detroys the initial size of the form-->
     <!--<ApplicationDefaultFont>Segoe UI, 9pt</ApplicationDefaultFont>-->

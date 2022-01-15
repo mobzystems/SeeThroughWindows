@@ -938,12 +938,15 @@ namespace SeeThroughWindows
     /// <summary>
     /// Show ourselves when the notify icon was clicked
     /// </summary>
-    private void notifyIcon_DoubleClick(object sender, EventArgs e)
+    private void notifyIcon_MouseUp(object sender, MouseEventArgs e)
     {
-      if (!this.Visible)
-        Show();
+      if (e.Button == MouseButtons.Left)
+      {
+        if (!this.Visible)
+          Show();
 
-      Activate();
+        Activate();
+      }
     }
 
     /// <summary>
