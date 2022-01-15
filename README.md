@@ -3,4 +3,4 @@ Press a hotkey to make the current window transparent, allowing you to see throu
 
 Releases can be downloaded from https://www.mobzystems.com/Tools/SeeThroughWindows
 
-The current release is 1.0.7, which runs standalone on .NET 6.0 so, no downloading .NET is no longer necessary.
+The current release is 1.0.7, which runs standalone on .NET 6.0, so downloading .NET is no longer necessary.
