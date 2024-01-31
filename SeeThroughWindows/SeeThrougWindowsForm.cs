@@ -149,7 +149,7 @@ namespace SeeThroughWindows
 
     const int HWND_BOTTOM = 1; // Places the window at the bottom of the Z order. If the hWnd parameter identifies a topmost window, the window loses its topmost status and is placed at the bottom of all other windows.
     const int HWND_NOTOPMOST = -2; // Places the window above all non-topmost windows (that is, behind all topmost windows). This flag has no effect if the window is already a non-topmost window.
-    const int HWND_TOP= 0; // Places the window at the top of the Z order.
+    const int HWND_TOP = 0; // Places the window at the top of the Z order.
     const int HWND_TOPMOST = -1; // Places the window above all non-topmost windows. The window maintains its topmost position even when it is deactivated.
 
     const int SW_HIDE = 0;
@@ -161,7 +161,7 @@ namespace SeeThroughWindows
     const uint SWP_NOMOVE = 0x0002; // Retains the current position (ignores X and Y parameters).
     const uint SWP_NOSIZE = 0x0001; // Retains the current size (ignores the cx and cy parameters).
     const uint SWP_NOZORDER = 0x0004; // Retains the current Z order (ignores the hWndInsertAfter parameter).
-    
+
     #endregion
 
     #region Constants
@@ -223,7 +223,7 @@ namespace SeeThroughWindows
       Version version = new Version(Application.ProductVersion);
       this.helpLink.Text = this.helpLink.Text
         .Replace("#V#", string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build))
-        .Replace("#3264#", (IntPtr.Size*8).ToString());
+        .Replace("#3264#", (IntPtr.Size * 8).ToString());
 
       // Use same icon for notify icon as for this form
       this.notifyIcon.Icon = this.Icon;
@@ -310,6 +310,8 @@ namespace SeeThroughWindows
 
       this.transparencyTrackBar.Value = this.semiTransparentValue;
 
+      this.UpdateUI();
+
       // Done loading
       this.loading = false;
     }
@@ -362,6 +364,15 @@ namespace SeeThroughWindows
     {
       base.OnClosed(e);
 
+      RestoreAllWindows();
+
+      // Unregister the hotkey:
+      if (this.userHotkey.IsRegistered)
+        this.userHotkey.Unregister();
+    }
+
+    private void RestoreAllWindows()
+    {
       // Restore all windows, ignoring exceptions. If there's an error,
       // we can't really do anything about it now
       foreach (IntPtr handle in this.hijackedWindows.Keys)
@@ -379,9 +390,8 @@ namespace SeeThroughWindows
         catch { }
       }
 
-      // Unregister the hotkey:
-      if (this.userHotkey.IsRegistered)
-        this.userHotkey.Unregister();
+      // We have no more hijacked windows now
+      this.hijackedWindows.Clear();
     }
     #endregion
 
@@ -440,6 +450,8 @@ namespace SeeThroughWindows
         }
 
         e.Handled = true;
+
+        this.UpdateUI();
       }
     }
 
@@ -576,9 +588,14 @@ namespace SeeThroughWindows
     {
       e.Handled = ChangeAlpha(GetForegroundWindow(), +16);
     }
-#endregion
+    #endregion
 
     #region Implementation
+    private void UpdateUI()
+    {
+      this.restoreAllButton.Enabled = this.hijackedWindows.Any();
+    }
+
     /// <summary>
     /// Change the alpha value of a window handle.
     /// 
@@ -1014,6 +1031,12 @@ namespace SeeThroughWindows
     private void clickThroughCheckBox_CheckedChanged(object sender, EventArgs e)
     {
       topMostCheckBox.Enabled = clickThroughCheckBox.Checked;
+    }
+
+    private void restoreAllButton_Click(object sender, EventArgs e)
+    {
+      RestoreAllWindows();
+      UpdateUI();
     }
     #endregion
 

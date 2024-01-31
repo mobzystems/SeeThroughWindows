@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <Nullable>disable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -10,18 +10,19 @@
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
     <ApplicationVisualStyles>true</ApplicationVisualStyles>
     <ApplicationUseCompatibleTextRendering>false</ApplicationUseCompatibleTextRendering>
-    <AssemblyVersion>1.0.7.0</AssemblyVersion>
+    <Version>1.0.8</Version>
+    <AssemblyVersion>1.0.8.0</AssemblyVersion>
     <FileVersion>$(AssemblyVersion)</FileVersion>
     <Company>MOBZystems</Company>
     <Copyright>Copyright © 2008-2024, MOBZystems BV, Amsterdam</Copyright>
     <Description>See Through Windows Tool</Description>
     <PackageIcon>Glasses-64B.png</PackageIcon>
-    <Version>1.0.7</Version>
     <!-- DO NOT SET THESE PROPERTIES -->
-    <!-- Setting a font detroys the initial size of the form-->
+    <!-- Setting a font destroys the initial size of the form-->
     <!--<ApplicationDefaultFont>Segoe UI, 9pt</ApplicationDefaultFont>-->
     <!-- Setting High DPI awareness mucks up layout -->
     <!--<ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>-->
+    <!--<ApplicationHighDpiMode>DpiUnawareGdiScaled</ApplicationHighDpiMode>-->
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
   </PropertyGroup>
 
