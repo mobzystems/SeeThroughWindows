@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows.Forms;
-using System.Runtime.InteropServices;
 using Microsoft.Win32;
+using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
+using System.Net.Http.Json;
+using System.Runtime.InteropServices;
 
 namespace SeeThroughWindows
 {
@@ -165,6 +162,9 @@ namespace SeeThroughWindows
     #endregion
 
     #region Constants
+    // Us
+    private const string ToolName = "SeeThroughWindows";
+
     // Constant for opaque transparency
     private const short OPAQUE = 255;
     // Default value for transparency
@@ -310,7 +310,7 @@ namespace SeeThroughWindows
 
       this.transparencyTrackBar.Value = this.semiTransparentValue;
 
-      this.UpdateUI();
+      UpdateUI();
 
       // Done loading
       this.loading = false;
@@ -321,54 +321,6 @@ namespace SeeThroughWindows
       int index = this.hotKeyComboBox.Items.Add(k);
       if (k == this.userHotkey.KeyCode)
         this.hotKeyComboBox.SelectedItem = k;
-    }
-    #endregion
-
-    #region Overridden methods
-
-    private void SeeThrougWindowsForm_Shown(object sender, EventArgs e)
-    {
-      // Make sure we hide ourselves when started minimized
-      if (this.WindowState == FormWindowState.Minimized)
-      {
-        // This causes a breif flash but swapping WindowState and Hide causes the form
-        // to stay minimized and to never become Normal
-        this.WindowState = FormWindowState.Normal;
-        this.Hide();
-      }
-    }
-
-    /// <summary>
-    /// Make sure we hide when the user wants to close,
-    /// except when this.exitingApplication
-    /// </summary>
-    protected override void OnFormClosing(FormClosingEventArgs e)
-    {
-      base.OnFormClosing(e);
-
-      if (e.CloseReason == CloseReason.UserClosing && !this.exitingApplication)
-      {
-        // No - save settings and hide ourselves
-        SaveSettings();
-
-        e.Cancel = true;
-        Hide();
-      }
-    }
-
-    /// <summary>
-    /// Clean up after ourselves when we really do close
-    /// </summary>
-    /// <param name="e"></param>
-    protected override void OnClosed(EventArgs e)
-    {
-      base.OnClosed(e);
-
-      RestoreAllWindows();
-
-      // Unregister the hotkey:
-      if (this.userHotkey.IsRegistered)
-        this.userHotkey.Unregister();
     }
 
     private void RestoreAllWindows()
@@ -392,6 +344,81 @@ namespace SeeThroughWindows
 
       // We have no more hijacked windows now
       this.hijackedWindows.Clear();
+    }
+    #endregion
+
+    #region Overridden methods
+
+    protected override async void OnLoad(EventArgs e)
+    {
+      base.OnLoad(e);
+
+      try
+      {
+        var client = new HttpClient();
+        var versionString = await client.GetFromJsonAsync<string>($"https://www.mobzystems.com/api/toolversion?t={ToolName}") ?? "";
+        if (versionString != "")
+        {
+          var version = new Version(versionString);
+          if (version > new Version(Application.ProductVersion))
+          {
+            this.updateAvailableLink.Text = $"v{version.ToString(3)} is available";
+            this.updateAvailableLink.Visible = true;
+            this.helpLink.Enabled = false; // This goes to the same page...
+          }
+        }
+      }
+      catch
+      {
+        // Ignore errors checking for updates
+      }
+    }
+
+    private void SeeThrougWindowsForm_Shown(object sender, EventArgs e)
+    {
+      // Make sure we hide ourselves when started minimized
+      if (this.WindowState == FormWindowState.Minimized)
+      {
+        // This causes a brief flash but swapping WindowState and Hide causes the form
+        // to stay minimized and to never become Normal
+        this.WindowState = FormWindowState.Normal;
+        this.Hide();
+      }
+    }
+
+    /// <summary>
+    /// Make sure we hide when the user wants to close,
+    /// except when this.exitingApplication
+    /// </summary>
+    protected override void OnFormClosing(FormClosingEventArgs e)
+    {
+      base.OnFormClosing(e);
+
+      // When closing the form, we don't exit (but hide in the task bar)
+      // EXCEPT when we're actually exiting the app OR when we're pressing Shift
+      if (e.CloseReason == CloseReason.UserClosing && !this.exitingApplication && ((Control.ModifierKeys & Keys.Shift) == 0))
+      {
+        // No - save settings and hide ourselves
+        SaveSettings();
+
+        e.Cancel = true;
+        Hide();
+      }
+    }
+
+    /// <summary>
+    /// Clean up after ourselves when we really do close
+    /// </summary>
+    /// <param name="e"></param>
+    protected override void OnClosed(EventArgs e)
+    {
+      base.OnClosed(e);
+
+      RestoreAllWindows();
+
+      // Unregister the hotkey:
+      if (this.userHotkey.IsRegistered)
+        this.userHotkey.Unregister();
     }
     #endregion
 
@@ -451,7 +478,7 @@ namespace SeeThroughWindows
 
         e.Handled = true;
 
-        this.UpdateUI();
+        UpdateUI();
       }
     }
 
@@ -1037,6 +1064,20 @@ namespace SeeThroughWindows
     {
       RestoreAllWindows();
       UpdateUI();
+    }
+
+    private void updateAvailableLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    {
+      try
+      {
+        var pi = new ProcessStartInfo($"https://www.mobzystems.com/Tools/{ToolName}");
+        pi.UseShellExecute = true;
+        Process.Start(pi);
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show(this, ex.Message, "Could not open web page", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
     }
     #endregion
 

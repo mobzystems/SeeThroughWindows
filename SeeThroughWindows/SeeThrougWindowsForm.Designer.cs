@@ -56,6 +56,8 @@ namespace SeeThroughWindows
       groupBox2 = new GroupBox();
       sendToMonitorEnabledCheckBox = new CheckBox();
       minMaxEnabledCheckBox = new CheckBox();
+      updateAvailableLink = new LinkLabel();
+      panel1 = new Panel();
       label3 = new Label();
       label4 = new Label();
       label1 = new Label();
@@ -65,6 +67,7 @@ namespace SeeThroughWindows
       ((System.ComponentModel.ISupportInitialize)transparencyTrackBar).BeginInit();
       groupBox1.SuspendLayout();
       groupBox2.SuspendLayout();
+      panel1.SuspendLayout();
       SuspendLayout();
       // 
       // label3
@@ -248,15 +251,16 @@ namespace SeeThroughWindows
       // 
       // helpLink
       // 
-      helpLink.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-      helpLink.Location = new Point(207, 348);
+      helpLink.AutoSize = true;
+      helpLink.Dock = DockStyle.Right;
+      helpLink.Location = new Point(212, 8);
       helpLink.Margin = new Padding(2, 0, 2, 0);
       helpLink.Name = "helpLink";
-      helpLink.Size = new Size(354, 15);
-      helpLink.TabIndex = 2;
+      helpLink.Size = new Size(313, 15);
+      helpLink.TabIndex = 0;
       helpLink.TabStop = true;
       helpLink.Text = "See Through Windows (#3264#-bit) v#V# by MOBZystems";
-      helpLink.TextAlign = ContentAlignment.MiddleRight;
+      helpLink.TextAlign = ContentAlignment.MiddleLeft;
       helpLink.VisitedLinkColor = Color.Blue;
       helpLink.LinkClicked += helpLink_LinkClicked;
       // 
@@ -372,14 +376,40 @@ namespace SeeThroughWindows
       minMaxEnabledCheckBox.UseVisualStyleBackColor = true;
       minMaxEnabledCheckBox.CheckedChanged += minMaxEnabledCheckBox_CheckedChanged;
       // 
+      // updateAvailableLink
+      // 
+      updateAvailableLink.AutoSize = true;
+      updateAvailableLink.Dock = DockStyle.Right;
+      updateAvailableLink.Location = new Point(525, 8);
+      updateAvailableLink.Name = "updateAvailableLink";
+      updateAvailableLink.Size = new Size(39, 15);
+      updateAvailableLink.TabIndex = 1;
+      updateAvailableLink.TabStop = true;
+      updateAvailableLink.Text = "(auto)";
+      updateAvailableLink.TextAlign = ContentAlignment.MiddleLeft;
+      updateAvailableLink.Visible = false;
+      updateAvailableLink.VisitedLinkColor = Color.Blue;
+      updateAvailableLink.LinkClicked += updateAvailableLink_LinkClicked;
+      // 
+      // panel1
+      // 
+      panel1.Controls.Add(helpLink);
+      panel1.Controls.Add(updateAvailableLink);
+      panel1.Dock = DockStyle.Bottom;
+      panel1.Location = new Point(0, 343);
+      panel1.Name = "panel1";
+      panel1.Padding = new Padding(8);
+      panel1.Size = new Size(572, 29);
+      panel1.TabIndex = 2;
+      // 
       // SeeThrougWindowsForm
       // 
       AutoScaleDimensions = new SizeF(7F, 15F);
       AutoScaleMode = AutoScaleMode.Font;
       ClientSize = new Size(572, 372);
+      Controls.Add(panel1);
       Controls.Add(groupBox2);
       Controls.Add(groupBox1);
-      Controls.Add(helpLink);
       Controls.Add(pictureBox1);
       FormBorderStyle = FormBorderStyle.FixedDialog;
       Icon = (Icon)resources.GetObject("$this.Icon");
@@ -396,6 +426,8 @@ namespace SeeThroughWindows
       groupBox1.PerformLayout();
       groupBox2.ResumeLayout(false);
       groupBox2.PerformLayout();
+      panel1.ResumeLayout(false);
+      panel1.PerformLayout();
       ResumeLayout(false);
     }
 
@@ -423,6 +455,8 @@ namespace SeeThroughWindows
     private ToolStripSeparator toolStripSeparator1;
     private PictureBox pictureBox1;
     private Button restoreAllButton;
+    private LinkLabel updateAvailableLink;
+    private Panel panel1;
   }
 }
 
