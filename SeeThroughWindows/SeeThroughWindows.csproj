@@ -13,7 +13,7 @@
     <AssemblyVersion>1.0.7.0</AssemblyVersion>
     <FileVersion>$(AssemblyVersion)</FileVersion>
     <Company>MOBZystems</Company>
-    <Copyright>Copyright © 2008-2022, MOBZystems BV, Amsterdam</Copyright>
+    <Copyright>Copyright © 2008-2024, MOBZystems BV, Amsterdam</Copyright>
     <Description>See Through Windows Tool</Description>
     <PackageIcon>Glasses-64B.png</PackageIcon>
     <Version>1.0.7</Version>
@@ -22,6 +22,7 @@
     <!--<ApplicationDefaultFont>Segoe UI, 9pt</ApplicationDefaultFont>-->
     <!-- Setting High DPI awareness mucks up layout -->
     <!--<ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>-->
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
   </PropertyGroup>
 
   <ItemGroup>
