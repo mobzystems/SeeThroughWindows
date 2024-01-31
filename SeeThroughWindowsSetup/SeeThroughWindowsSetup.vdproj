@@ -39,7 +39,7 @@
         "InstallerBootstrapper" = "3:2"
             "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
             {
-            "Enabled" = "11:TRUE"
+            "Enabled" = "11:FALSE"
             "PromptEnabled" = "11:TRUE"
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
@@ -66,7 +66,7 @@
         "InstallerBootstrapper" = "3:2"
             "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
             {
-            "Enabled" = "11:TRUE"
+            "Enabled" = "11:FALSE"
             "PromptEnabled" = "11:TRUE"
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
@@ -751,7 +751,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B1916A607C73414B878F8CBA39DDA098"
             {
-            "SourcePath" = "8:..\\SeeThroughWindows\\bin\\Release\\net6.0-windows\\publish\\win-x86\\SeeThroughWindows.exe"
+            "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B46C24B3D9F4483484BA3B31CC7785EA"
