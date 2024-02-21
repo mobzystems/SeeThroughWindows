@@ -1,6 +1,6 @@
 # SeeThroughWindows
-Press a hotkey to make the current window transparent, allowing you to see through it! Press hotkeys to minimize/maximize the current window, or to send it to another monitor (like Windows 7, except also if you don't have Windows 7)
+Press a hotkey to make the current window transparent, allowing you to see through it!
 
 Releases can be downloaded from https://www.mobzystems.com/Tools/SeeThroughWindows
 
-The current release is 1.0.7, which runs standalone on .NET 6.0, so downloading .NET is no longer necessary.
+The current release is 1.0.8, which runs standalone on .NET 8.0, so downloading .NET is no longer necessary.
