@@ -98,16 +98,6 @@
         {
             "LaunchCondition"
             {
-                "{A06ECF26-33A3-4562-8140-9B0E340D4F24}:_7D231905797D4A8E9E3EDF2B1D0A57D6"
-                {
-                "Name" = "8:.NET Core"
-                "Message" = "8:[VSDNETCOREMSG]"
-                "AllowLaterVersions" = "11:FALSE"
-                "InstallUrl" = "8:https://dotnet.microsoft.com/download/dotnet-core/[NetCoreVerMajorDotMinor]"
-                "IsNETCore" = "11:TRUE"
-                "Architecture" = "2:0"
-                "Runtime" = "2:0"
-                }
             }
         }
         "File"
@@ -200,7 +190,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:See Through Windows"
         "ProductCode" = "8:{CE76C8CF-C55B-4EDC-95F4-8531797547B6}"
-        "PackageCode" = "8:{EBCFBDBA-6B78-435F-85C4-01F00F909DAC}"
+        "PackageCode" = "8:{83CD1309-4983-490F-9B92-644FF0A30B68}"
         "UpgradeCode" = "8:{2CBC465E-0AB2-4C31-BBCF-C48C5D90505C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
