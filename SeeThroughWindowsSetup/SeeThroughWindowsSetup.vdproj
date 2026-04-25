@@ -190,7 +190,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:See Through Windows"
         "ProductCode" = "8:{CE76C8CF-C55B-4EDC-95F4-8531797547B6}"
-        "PackageCode" = "8:{83CD1309-4983-490F-9B92-644FF0A30B68}"
+        "PackageCode" = "8:{D24018FC-C6F3-4B31-91E7-12CD35B62BDF}"
         "UpgradeCode" = "8:{2CBC465E-0AB2-4C31-BBCF-C48C5D90505C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -761,6 +761,7 @@
             "OutputGroupCanonicalName" = "8:PublishItems"
             "OutputProjectGuid" = "8:{00E2FF0D-A3DD-4EBE-995D-67A4408C2B69}"
             "ShowKeyOutput" = "11:TRUE"
+            "PublishProfilePath" = "8:Properties\\PublishProfiles\\PublishForSetup.pubxml"
                 "ExcludeFilters"
                 {
                 }
