@@ -189,15 +189,6 @@ namespace SeeThroughWindows
     // Current transparency value
     private short semiTransparentValue = DEFAULT_SEMITRANSPARENT;
 
-    // Maximize hotkey: Control+Windows+Up
-    protected MOBZystems.Hotkey maximizeHotkey = new MOBZystems.Hotkey(Keys.Up, false, true, false, true);
-    // Minimize hotkey: Control+Windows+Down
-    protected MOBZystems.Hotkey minimizeHotkey = new MOBZystems.Hotkey(Keys.Down, false, true, false, true);
-    // Previous monitor hotkey: Control+Windows+Left
-    protected MOBZystems.Hotkey previousScreenHotkey = new MOBZystems.Hotkey(Keys.Left, false, true, false, true);
-    // Next monitor hotkey: Control+Windows+Right
-    protected MOBZystems.Hotkey nextScreenHotkey = new MOBZystems.Hotkey(Keys.Right, false, true, false, true);
-
     // More transparent hotkey: Control+Windows+PageDn
     protected MOBZystems.Hotkey moreTransparentHotkey = new MOBZystems.Hotkey(Keys.PageDown, false, true, false, true);
     // Less transparent hotkey: Control+Windows+PageUp
@@ -249,8 +240,6 @@ namespace SeeThroughWindows
       bool altKey = BoolFromString((string)root.GetValue("Alt", "0"));
       bool windowsKey = BoolFromString((string)root.GetValue("Windows", "0"));
 
-      this.sendToMonitorEnabledCheckBox.Checked = BoolFromString((string)root.GetValue("EnableLeftRight", "0"));
-      this.minMaxEnabledCheckBox.Checked = BoolFromString((string)root.GetValue("EnableUpDown", "0"));
       this.enableChangeTransparencyCheckbox.Checked = BoolFromString((string)root.GetValue("EnablePageUpDown", "1"));
 
       // Create a hot key with the settings:
@@ -258,22 +247,6 @@ namespace SeeThroughWindows
       // Catch the 'Pressed' event
       this.userHotkey.Pressed += new HandledEventHandler(UserHotkey_Pressed);
       this.userHotkey.Register(this);
-
-      this.minimizeHotkey.Pressed += new HandledEventHandler(MinimizeHotkey_Pressed);
-      if (this.minMaxEnabledCheckBox.Checked)
-        this.minimizeHotkey.Register(this);
-
-      this.maximizeHotkey.Pressed += new HandledEventHandler(MaximizeHotkey_Pressed);
-      if (this.minMaxEnabledCheckBox.Checked)
-        this.maximizeHotkey.Register(this);
-
-      this.previousScreenHotkey.Pressed += new HandledEventHandler(PreviousScreenHotkey_Pressed);
-      if (this.sendToMonitorEnabledCheckBox.Checked)
-        this.previousScreenHotkey.Register(this);
-
-      this.nextScreenHotkey.Pressed += new HandledEventHandler(NextScreenHotkey_Pressed);
-      if (this.sendToMonitorEnabledCheckBox.Checked)
-        this.nextScreenHotkey.Register(this);
 
       this.moreTransparentHotkey.Pressed += new HandledEventHandler(MoreTransparentHotkey_Pressed);
       if (this.enableChangeTransparencyCheckbox.Checked)
@@ -938,8 +911,6 @@ namespace SeeThroughWindows
       root.SetValue("Alt", BoolToString(this.userHotkey.Alt));
       root.SetValue("Windows", BoolToString(this.userHotkey.Windows));
 
-      root.SetValue("EnableLeftRight", BoolToString(this.sendToMonitorEnabledCheckBox.Checked));
-      root.SetValue("EnableUpDown", BoolToString(this.minMaxEnabledCheckBox.Checked));
       root.SetValue("EnablePageUpDown", BoolToString(this.enableChangeTransparencyCheckbox.Checked));
     }
     #endregion
@@ -1014,30 +985,6 @@ namespace SeeThroughWindows
       Close();
 
       Application.Exit();
-    }
-
-    /// <summary>
-    /// (Un)register hotkeys for window minimize/maximize
-    /// </summary>
-    private void minMaxEnabledCheckBox_CheckedChanged(object sender, EventArgs e)
-    {
-      if (this.loading)
-        return;
-
-      RegisterHotkey(this.minimizeHotkey, minMaxEnabledCheckBox.Checked);
-      RegisterHotkey(this.maximizeHotkey, minMaxEnabledCheckBox.Checked);
-    }
-
-    /// <summary>
-    /// (Un)register hotkeys for move window
-    /// </summary>
-    private void sendToMonitorEnabledCheckBox_CheckedChanged(object sender, EventArgs e)
-    {
-      if (this.loading)
-        return;
-
-      RegisterHotkey(this.previousScreenHotkey, this.sendToMonitorEnabledCheckBox.Checked);
-      RegisterHotkey(this.nextScreenHotkey, this.sendToMonitorEnabledCheckBox.Checked);
     }
 
     /// <summary>

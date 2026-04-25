@@ -53,9 +53,6 @@ namespace SeeThroughWindows
       enableChangeTransparencyCheckbox = new CheckBox();
       topMostCheckBox = new CheckBox();
       clickThroughCheckBox = new CheckBox();
-      groupBox2 = new GroupBox();
-      sendToMonitorEnabledCheckBox = new CheckBox();
-      minMaxEnabledCheckBox = new CheckBox();
       updateAvailableLink = new LinkLabel();
       panel1 = new Panel();
       label3 = new Label();
@@ -66,7 +63,6 @@ namespace SeeThroughWindows
       contextMenuStrip.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)transparencyTrackBar).BeginInit();
       groupBox1.SuspendLayout();
-      groupBox2.SuspendLayout();
       panel1.SuspendLayout();
       SuspendLayout();
       // 
@@ -76,7 +72,7 @@ namespace SeeThroughWindows
       label3.Location = new Point(110, 104);
       label3.Margin = new Padding(2, 0, 2, 0);
       label3.Name = "label3";
-      label3.Size = new Size(68, 15);
+      label3.Size = new Size(69, 15);
       label3.TabIndex = 8;
       label3.Text = "Transparent";
       label3.TextAlign = ContentAlignment.MiddleLeft;
@@ -110,7 +106,7 @@ namespace SeeThroughWindows
       label2.Location = new Point(24, 78);
       label2.Margin = new Padding(2, 0, 2, 0);
       label2.Name = "label2";
-      label2.Size = new Size(79, 15);
+      label2.Size = new Size(80, 15);
       label2.TabIndex = 6;
       label2.Text = "&Transparency:";
       label2.TextAlign = ContentAlignment.MiddleRight;
@@ -253,10 +249,10 @@ namespace SeeThroughWindows
       // 
       helpLink.AutoSize = true;
       helpLink.Dock = DockStyle.Right;
-      helpLink.Location = new Point(212, 8);
+      helpLink.Location = new Point(211, 8);
       helpLink.Margin = new Padding(2, 0, 2, 0);
       helpLink.Name = "helpLink";
-      helpLink.Size = new Size(313, 15);
+      helpLink.Size = new Size(314, 15);
       helpLink.TabIndex = 0;
       helpLink.TabStop = true;
       helpLink.Text = "See Through Windows (#3264#-bit) v#V# by MOBZystems";
@@ -338,44 +334,6 @@ namespace SeeThroughWindows
       clickThroughCheckBox.UseVisualStyleBackColor = true;
       clickThroughCheckBox.CheckedChanged += clickThroughCheckBox_CheckedChanged;
       // 
-      // groupBox2
-      // 
-      groupBox2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-      groupBox2.Controls.Add(sendToMonitorEnabledCheckBox);
-      groupBox2.Controls.Add(minMaxEnabledCheckBox);
-      groupBox2.Location = new Point(78, 271);
-      groupBox2.Margin = new Padding(2);
-      groupBox2.Name = "groupBox2";
-      groupBox2.Padding = new Padding(2);
-      groupBox2.Size = new Size(483, 67);
-      groupBox2.TabIndex = 1;
-      groupBox2.TabStop = false;
-      groupBox2.Text = "Move window";
-      // 
-      // sendToMonitorEnabledCheckBox
-      // 
-      sendToMonitorEnabledCheckBox.AutoSize = true;
-      sendToMonitorEnabledCheckBox.Location = new Point(4, 43);
-      sendToMonitorEnabledCheckBox.Margin = new Padding(2);
-      sendToMonitorEnabledCheckBox.Name = "sendToMonitorEnabledCheckBox";
-      sendToMonitorEnabledCheckBox.Size = new Size(410, 19);
-      sendToMonitorEnabledCheckBox.TabIndex = 1;
-      sendToMonitorEnabledCheckBox.Text = "Enable Control+Windows+Left/Right to &send windows to other monitors";
-      sendToMonitorEnabledCheckBox.UseVisualStyleBackColor = true;
-      sendToMonitorEnabledCheckBox.CheckedChanged += sendToMonitorEnabledCheckBox_CheckedChanged;
-      // 
-      // minMaxEnabledCheckBox
-      // 
-      minMaxEnabledCheckBox.AutoSize = true;
-      minMaxEnabledCheckBox.Location = new Point(4, 20);
-      minMaxEnabledCheckBox.Margin = new Padding(2);
-      minMaxEnabledCheckBox.Name = "minMaxEnabledCheckBox";
-      minMaxEnabledCheckBox.Size = new Size(396, 19);
-      minMaxEnabledCheckBox.TabIndex = 0;
-      minMaxEnabledCheckBox.Text = "Enable Control+Windows+Up/Down to &maximize/mimimize windows";
-      minMaxEnabledCheckBox.UseVisualStyleBackColor = true;
-      minMaxEnabledCheckBox.CheckedChanged += minMaxEnabledCheckBox_CheckedChanged;
-      // 
       // updateAvailableLink
       // 
       updateAvailableLink.AutoSize = true;
@@ -396,7 +354,7 @@ namespace SeeThroughWindows
       panel1.Controls.Add(helpLink);
       panel1.Controls.Add(updateAvailableLink);
       panel1.Dock = DockStyle.Bottom;
-      panel1.Location = new Point(0, 343);
+      panel1.Location = new Point(0, 275);
       panel1.Name = "panel1";
       panel1.Padding = new Padding(8);
       panel1.Size = new Size(572, 29);
@@ -406,9 +364,8 @@ namespace SeeThroughWindows
       // 
       AutoScaleDimensions = new SizeF(7F, 15F);
       AutoScaleMode = AutoScaleMode.Font;
-      ClientSize = new Size(572, 372);
+      ClientSize = new Size(572, 304);
       Controls.Add(panel1);
-      Controls.Add(groupBox2);
       Controls.Add(groupBox1);
       Controls.Add(pictureBox1);
       FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -424,8 +381,6 @@ namespace SeeThroughWindows
       ((System.ComponentModel.ISupportInitialize)transparencyTrackBar).EndInit();
       groupBox1.ResumeLayout(false);
       groupBox1.PerformLayout();
-      groupBox2.ResumeLayout(false);
-      groupBox2.PerformLayout();
       panel1.ResumeLayout(false);
       panel1.PerformLayout();
       ResumeLayout(false);
@@ -446,9 +401,6 @@ namespace SeeThroughWindows
     private System.Windows.Forms.CheckBox previewCheckBox;
     private System.Windows.Forms.LinkLabel helpLink;
     private System.Windows.Forms.GroupBox groupBox1;
-    private System.Windows.Forms.GroupBox groupBox2;
-    private System.Windows.Forms.CheckBox sendToMonitorEnabledCheckBox;
-    private System.Windows.Forms.CheckBox minMaxEnabledCheckBox;
     private System.Windows.Forms.CheckBox clickThroughCheckBox;
     private System.Windows.Forms.CheckBox topMostCheckBox;
     private System.Windows.Forms.CheckBox enableChangeTransparencyCheckbox;
