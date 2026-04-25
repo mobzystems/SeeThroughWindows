@@ -19,6 +19,12 @@
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_C4CE122F6B074F64B9022DD6C3BF9330"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -193,15 +199,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:See Through Windows"
-        "ProductCode" = "8:{144A6955-1617-4FD1-A4ED-A5C2FC01563E}"
-        "PackageCode" = "8:{9B162BFB-81AE-4699-A041-C6CDC81E94B7}"
+        "ProductCode" = "8:{CE76C8CF-C55B-4EDC-95F4-8531797547B6}"
+        "PackageCode" = "8:{EBCFBDBA-6B78-435F-85C4-01F00F909DAC}"
         "UpgradeCode" = "8:{2CBC465E-0AB2-4C31-BBCF-C48C5D90505C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.8"
+        "ProductVersion" = "8:1.0.9"
         "Manufacturer" = "8:MOBZystems"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://www.mobzystems.com/Tools/SeeThroughWindows"
@@ -322,7 +328,7 @@
             "ShowCmd" = "3:7"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_B1916A607C73414B878F8CBA39DDA098"
+            "Target" = "8:_C4CE122F6B074F64B9022DD6C3BF9330"
             "Folder" = "8:_85D5495D60B242F7992F097C1A39BF2F"
             "WorkingFolder" = "8:_B46C24B3D9F4483484BA3B31CC7785EA"
             "Icon" = "8:_3348BC3490524948A07EA6529ABB97DE"
@@ -336,7 +342,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_B1916A607C73414B878F8CBA39DDA098"
+            "Target" = "8:_C4CE122F6B074F64B9022DD6C3BF9330"
             "Folder" = "8:_B80C8C3EDB56459D92518A82D7C8E2E0"
             "WorkingFolder" = "8:_B46C24B3D9F4483484BA3B31CC7785EA"
             "Icon" = "8:_3348BC3490524948A07EA6529ABB97DE"
@@ -741,9 +747,9 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B1916A607C73414B878F8CBA39DDA098"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C4CE122F6B074F64B9022DD6C3BF9330"
             {
-            "SourcePath" = "8:..\\SeeThroughWindows\\bin\\Release\\net8.0-windows7.0\\publish\\win-x86\\SeeThroughWindows.exe"
+            "SourcePath" = "8:..\\SeeThroughWindows\\obj\\Release\\net10.0-windows10.0.17763.0\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B46C24B3D9F4483484BA3B31CC7785EA"
@@ -765,7 +771,6 @@
             "OutputGroupCanonicalName" = "8:PublishItems"
             "OutputProjectGuid" = "8:{00E2FF0D-A3DD-4EBE-995D-67A4408C2B69}"
             "ShowKeyOutput" = "11:TRUE"
-            "PublishProfilePath" = "8:Properties\\PublishProfiles\\PublishForSetup.pubxml"
                 "ExcludeFilters"
                 {
                 }
