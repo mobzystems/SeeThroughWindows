@@ -253,3 +253,5 @@ paket-files/
 
 # Mac .DS_Store
 .DS_Store
+# Don't commit our own installations
+*.msi
