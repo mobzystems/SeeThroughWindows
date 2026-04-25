@@ -102,14 +102,6 @@
                 "Architecture" = "2:0"
                 "Runtime" = "2:0"
                 }
-                "{A06ECF26-33A3-4562-8140-9B0E340D4F24}:_E11E996105234BDCA8AFFF6139F9F5EA"
-                {
-                "Name" = "8:.NET Framework"
-                "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:.NETFramework,Version=v2.0"
-                "AllowLaterVersions" = "11:FALSE"
-                "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=9832"
-                }
             }
         }
         "File"
@@ -202,7 +194,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:See Through Windows"
         "ProductCode" = "8:{144A6955-1617-4FD1-A4ED-A5C2FC01563E}"
-        "PackageCode" = "8:{A1C950A9-D28C-4A75-9C8F-59BAD65142B4}"
+        "PackageCode" = "8:{9B162BFB-81AE-4699-A041-C6CDC81E94B7}"
         "UpgradeCode" = "8:{2CBC465E-0AB2-4C31-BBCF-C48C5D90505C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -751,7 +743,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B1916A607C73414B878F8CBA39DDA098"
             {
-            "SourcePath" = "8:"
+            "SourcePath" = "8:..\\SeeThroughWindows\\bin\\Release\\net8.0-windows7.0\\publish\\win-x86\\SeeThroughWindows.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B46C24B3D9F4483484BA3B31CC7785EA"
